@@ -7,11 +7,9 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public enum ApiLogMessages {
-    USER_INFO_BY_ID("RECEIVING USER BY ID: %s");
+    USER_INFO_BY_ID("RECEIVING USER BY ID: %s"),
 
-    private final String message;
+    GET_CURRENT_METHOD_NAME("log{CURRENT METHOD NAME: {}}");
+    private final String value;
 
-    public String getMessage(Object... args) {
-        return String.format(message, args);
-    }
 }

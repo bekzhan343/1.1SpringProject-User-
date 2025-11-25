@@ -8,9 +8,9 @@ import com.example1._SpringProjects.Service.UserService;
 import com.example1._SpringProjects.constants.ApiErrorMessage;
 import com.example1._SpringProjects.dto.user.UserDTO;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.springframework.stereotype.Service;
+
 
 
 @Service
@@ -32,4 +32,15 @@ public class UserServiceImpl implements UserService {
 
         return IamResponse.createSuccessfully(userDTO);
     }
+
+
+    public IamResponse<UserDTO> createUser(UserDTO userDTO){
+        User user = new User(userDTO.getId(),userDTO.getName(),userDTO.getPhoneNumber());
+
+        userRepository.save(user);
+
+        return IamResponse.createSuccessfully(userDTO);
+    }
+
+
 }
