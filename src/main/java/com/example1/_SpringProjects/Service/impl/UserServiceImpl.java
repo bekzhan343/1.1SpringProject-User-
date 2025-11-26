@@ -7,6 +7,7 @@ import com.example1._SpringProjects.Response.IamResponse;
 import com.example1._SpringProjects.Service.UserService;
 import com.example1._SpringProjects.constants.ApiErrorMessage;
 import com.example1._SpringProjects.dto.user.UserDTO;
+import com.example1._SpringProjects.map.UserDTOMapping;
 import lombok.RequiredArgsConstructor;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.springframework.stereotype.Service;
@@ -18,17 +19,14 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final UserDTOMapping mapping;
 
     @Override
     public IamResponse<UserDTO> getByID(@NotNull Integer userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException(ApiErrorMessage.USER_INFO_NOT_FOUND.getErrorMessage(userId)));
 
-        UserDTO userDTO = UserDTO.builder()
-                .id(user.getId())
-                .name(user.getName())
-                .phoneNumber(user.getPhoneNumber())
-                .build();
+        UserDTO userDTO = mapping.toDTO(user);
 
         return IamResponse.createSuccessfully(userDTO);
     }
